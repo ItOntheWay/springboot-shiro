@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leju.yunke.virtual.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.leju.yunke.virtual.entity.Role">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, name, code,status,create_time,update_time,deleted
+  </sql>
+
+  <sql id="Base_Where">
+    <if test="id != null"> and id=#{id} </if>
+    <if test="name != null"> and name=#{name} </if>
+    <if test="code != null"> and code=#{code} </if>
+    <if test="status != null"> and status=#{status} </if>
+    <if test="createTime != null"> and create_time=#{createTime} </if>
+    <if test="updateTime != null"> and update_time=#{updateTime} </if>
+    <if test="deleted != null"> and deleted=#{deleted} </if>
+  </sql>
+
+  <select id="getRolesByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select r.* from user u left join role r on u.role_id = r.id where 1=1
+    and u.id = #{userId}
+  </select>
+</mapper>

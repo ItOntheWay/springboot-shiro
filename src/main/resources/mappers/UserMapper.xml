@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leju.yunke.virtual.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.leju.yunke.virtual.entity.User">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+  </resultMap>
+  <sql id="Base_Where">
+    <if test="id != null"> and id=#{id} </if>
+    <if test="userName != null"> and user_name=#{userName} </if>
+    <if test="password != null"> and password=#{password} </if>
+    <if test="roleId != null"> and role_id=#{roleId} </if>
+    <if test="createTime != null"> and create_time=#{createTime} </if>
+    <if test="updateTime != null"> and update_time=#{updateTime} </if>
+    <if test="deleted != null"> and deleted=#{deleted} </if>
+    <if test="email != null"> and email=#{email} </if>
+  </sql>
+
+  <select id="getByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from user where 1=1
+    and user_name = #{userName}
+  </select>
+
+  <select id="getByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from user where 1=1
+    and id = #{id}
+  </select>
+</mapper>

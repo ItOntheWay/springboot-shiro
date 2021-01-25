@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leju.yunke.virtual.mapper.ResourcesMapper">
+  <resultMap id="BaseResultMap" type="com.leju.yunke.virtual.entity.Resources">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="external" jdbcType="INTEGER" property="external" />
+    <result column="available" jdbcType="INTEGER" property="available" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+
+  <resultMap id="rm" type="com.leju.yunke.virtual.entity.Resources">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="external" jdbcType="INTEGER" property="external" />
+    <result column="available" jdbcType="INTEGER" property="available" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <collection property="nodes" column="node_id" javaType="ArrayList" ofType="com.leju.yunke.virtual.entity.Resources">
+      <result property="id" jdbcType="BIGINT" column="node_id"/>
+      <result property="name" jdbcType="VARCHAR" column="node_name"/>
+      <result property="type" jdbcType="VARCHAR" column="node_type"/>
+      <result property="url" jdbcType="VARCHAR" column="node_url"/>
+      <result property="parentId" jdbcType="BIGINT" column="node_parent_id"/>
+      <result property="permission" jdbcType="VARCHAR" column="node_permission"/>
+      <result property="available" jdbcType="BIT" column="node_available"/>
+      <result property="external" jdbcType="BIT" column="node_external"/>
+      <result property="icon" jdbcType="VARCHAR" column="node_icon"/>
+    </collection>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id,name,type,url,permission,parent_id,sort,external,available,icon,create_time,update_time,deleted
+  </sql>
+
+  <sql id="Base_Where">
+    <if test="id != null"> and id=#{id} </if>
+    <if test="name != null"> and name=#{name} </if>
+    <if test="type != null"> and type=#{type}</if>
+    <if test="url != null" > and url= #{url} </if>
+    <if test="permission != null" > and permission = #{permission}</if>
+    <if test="parentId != null" > and parent_id = #{parentId}</if>
+    <if test="sort != null" > and sort = #{sort}</if>
+    <if test="external != null" > and external = #{external}</if>
+    <if test="available != null" > and available = #{available}</if>
+    <if test="icon != null" > and icon = #{icon}</if>
+    <if test="createTime != null"  > and create_time = #{createTime}</if>
+    <if test="updateTime != null" > and update_time = #{updateTime}</if>
+    <if test="deleted != null"> and deleted = #{deleted}</if>
+  </sql>
+  <select id="listAll" resultMap="BaseResultMap">
+    select re.*
+    from role_resources rr left  join resources re on rr.resources_id = re.id
+  </select>
+  <select id="listByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select re.*
+    from role_resources rr left  join resources re on rr.resources_id = re.id
+    where 1=1 and  rr.role_id = #{roleId}
+  </select>
+  <select id="getMenusByCondition" parameterType="map" resultMap="rm">
+    select re.id,
+    re.name,
+    re.parent_id,
+    re.url,
+    re.permission,
+    re.icon,
+    re.external,
+    re.`available`,
+    node.id AS node_id,
+    node.`name` AS node_name,
+    node.`type` AS node_type,
+    node.`url` AS node_url,
+    node.parent_id AS node_parent_id,
+    node.`permission` AS node_permission,
+    node.`available` AS node_available,
+    node.`external` AS node_external,
+    node.icon AS node_icon
+    from resources re
+    LEFT JOIN role_resources rr on re.id = rr.resources_id
+    LEFT JOIN resources node on node.parent_id = re.id
+    where
+    (re.parent_id = 0 OR re.parent_id IS NULL )
+    <if test="roleId !=null">
+      and  rr.role_id = #{roleId}
+    </if>
+    <if test="type !=null">
+      and  re.type = #{type}
+    </if>
+    and (re.parent_id = 0 OR re.parent_id IS NULL)
+    order by
+    re.sort ASC,
+    node.sort ASC
+  </select>
+
+  <select id="getSubMenusByParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from resources where 1=1 and parent_id = #{resourcesId}
+  </select>
+</mapper>
