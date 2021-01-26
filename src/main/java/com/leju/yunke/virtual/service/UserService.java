@@ -1,7 +1,10 @@
 package com.leju.yunke.virtual.service;
 
 
+import com.github.pagehelper.PageInfo;
 import com.leju.yunke.virtual.entity.User;
+
+import java.util.Map;
 
 /**
  * @author jingpb
@@ -11,4 +14,5 @@ import com.leju.yunke.virtual.entity.User;
 public interface UserService {
     User getByUserName(String userName);
     User getByPrimaryKey(Integer userId);
+    PageInfo<User> queryUserList(Map map);
 }

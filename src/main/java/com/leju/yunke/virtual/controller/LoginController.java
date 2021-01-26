@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -24,15 +23,15 @@ public class LoginController {
     /**
      * 登录
      *
-     * @param username
-     * @param password
+     * @param
+     * @param
      * @return
      */
     @PostMapping("/login")
     @ResponseBody
-    public Result submitLogin(@RequestBody JSONObject data) {
-        String username = data.getString("username");
-        String password = data.getString("password");
+    public Result submitLogin(String username,String password) {
+        /*String username = data.getString("username");
+        String password = data.getString("password");*/
         /*boolean rememberMe = data.getBoolean("rememberMe");
         String kaptcha =data.getString("kaptcha");*/
         Result result = Result.ok();

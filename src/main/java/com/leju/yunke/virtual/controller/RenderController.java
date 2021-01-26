@@ -39,6 +39,14 @@ public class RenderController {
 //        List<Resources> menus =  resourcesService.getMenusByRoleId(user.getRoleId());
         List<Resources> menus =  resourcesService.getMenusByRoleId(1);
         model.addAttribute("menus",menus);
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute(Const.USER_SESSION_KEY);
+        model.addAttribute("user",user);
         return "index";
+    }
+
+    @GetMapping(value = {"", "/console"})
+    public String console() {
+
+        return "console";
     }
 }

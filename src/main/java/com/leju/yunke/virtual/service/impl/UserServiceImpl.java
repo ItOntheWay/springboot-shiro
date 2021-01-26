@@ -1,10 +1,16 @@
 package com.leju.yunke.virtual.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.leju.yunke.virtual.entity.User;
 import com.leju.yunke.virtual.mapper.UserMapper;
 import com.leju.yunke.virtual.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author jingpb
@@ -25,5 +31,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByPrimaryKey(Integer userId) {
         return userMapper.getByPrimaryKey(userId);
+    }
+
+    @Override
+    public PageInfo<User> queryUserList(Map map) {
+        Integer pageNum = Integer.valueOf(map.get("pageNum").toString());
+        Integer pageSize = Integer.valueOf(map.get("pageSize").toString());
+        Integer offset = 0 ;
+        if(pageNum <=0){
+            offset = 0;
+        }else{
+            offset = (pageNum - 1) * pageSize;
+        }
+        map.put("offset",offset);
+        PageHelper.startPage(pageNum,pageSize);
+        List<User> list = userMapper.queryUserList(map);
+        return new PageInfo<>(list);
     }
 }

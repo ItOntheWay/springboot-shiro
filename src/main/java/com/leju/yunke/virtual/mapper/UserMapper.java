@@ -4,6 +4,9 @@ import com.leju.yunke.virtual.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author jingpb
  * @version 1.0
@@ -18,4 +21,8 @@ public interface UserMapper {
     User getByUserName(@Param("userName") String userName);
 
     User getByPrimaryKey(@Param("id") Integer id);
+
+    List<User> pageData(Map map);
+    int pageCount(Map map);
+    List<User> queryUserList(Map map);
 }

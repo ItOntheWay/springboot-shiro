@@ -82,7 +82,7 @@ public class WebConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {// 2
         //
-        registry.addInterceptor(new DemoInterceptor()).excludePathPatterns(Arrays.asList("/static/**"));
+        registry.addInterceptor(new DemoInterceptor()).excludePathPatterns("/", "/index.html", "/static/**","/images/**", "/js/**", "/layuiadmin/**");
         registry.addInterceptor(demoInterceptor());
     }
 }
