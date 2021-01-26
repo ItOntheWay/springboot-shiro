@@ -23,30 +23,18 @@
             <div class="layui-form layui-card-header layuiadmin-card-header-auto">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">城市</label>
+                        <label class="layui-form-label">角色名</label>
                         <div class="layui-input-inline">
-                            <select name="city">
-                                <option value="">所有</option>
-                                <!--<option th:each="e:${schools}" th:value="${e.id}" th:text="${e.name}"></option>-->
-                            </select>
+                            <input name="name" autocomplete="off" class="layui-input" type="text"/>
                         </div>
                     </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">用户组</label>
-                            <div class="layui-input-inline">
-                                <select name="role">
-                                    <option value="">所有</option>
-                                    <option th:each="e:${roles}" th:value="${e.id}" th:text="${e.name}"></option>
-                                </select>
-                            </div>
-                        </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">用户名</label>
+                        <label class="layui-form-label">角色编号</label>
                         <div class="layui-input-inline">
-                            <input name="username" autocomplete="off" class="layui-input" type="text"/>
+                            <input name="code" autocomplete="off" class="layui-input" type="text"/>
                         </div>
                     </div>
-                    <!--<div class="layui-inline">
+                    <div class="layui-inline">
                         <label class="layui-form-label">状态</label>
                         <div class="layui-input-inline">
                             <select name="status">
@@ -54,7 +42,7 @@
                                 <option th:each="e:${allStatuss}" th:value="${e.key}" th:text="${e.value}"></option>
                             </select>
                         </div>
-                    </div>-->
+                    </div>
                     <div class="layui-inline">
                         <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-entity-front-search">
                             <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
@@ -66,23 +54,23 @@
             <div class="layui-card-body">
                 <div style="padding-bottom: 10px;">
                     <button class="layui-btn layuiadmin-btn-useradmin" data-type="add">添加</button>
-                    <button class="layui-btn layuiadmin-btn-useradmin" data-type="batchdel">删除</button>
+<!--                    <button class="layui-btn layuiadmin-btn-useradmin" data-type="batchdel">删除</button>-->
                 </div>
-                <table lay-filter="LAY-entity-manage" class="layui-table" lay-data="{height:'full-220', url:'/user/list', page:true, id:'LAY-entity-manage' ,parseData: function(res){tableJson=res;return res;}}" >
+                <table lay-filter="LAY-entity-manage" class="layui-table" lay-data="{height:'full-220', url:'/role/list', page:true, id:'LAY-entity-manage' ,parseData: function(res){tableJson=res;return res;}}" >
                     <thead>
                     <tr>
                         <th lay-data="{type: 'checkbox', fixed: 'left'}">编号</th>
                         <th lay-data="{width:100,field: 'id'}">id</th>
 <!--                        <th lay-data="{width:150,field: 'school',templet: function(d){return d.school==null?'':d.school.name}}">学校</th>-->
-                        <th lay-data="{width:150,field: 'userName'}">用户名</th>
+                        <th lay-data="{width:150,field: 'name'}">角色名</th>
 <!--                        <th lay-data="{width:100,field: 'realName'}">操作员姓名</th>-->
                         <!--<th lay-data="{width:100,field: 'roleList',templet:function(d){return showRoles(d.roleList)}}">角色</th>-->
-                        <th lay-data="{width:100,field: 'role',templet: function(d){return d.role==null?'':d.role.name}}">角色</th>
-                        <th lay-data="{width:100,field: 'email'}">电子邮件</th>
+<!--                        <th lay-data="{width:100,field: 'role',templet: function(d){return d.role==null?'':d.role.name}}">角色编码</th>-->
+                        <th lay-data="{width:100,field: 'code'}">角色编码</th>
 <!--                        <th lay-data="{width:150,field: 'mobileNo'}">手机号码</th>-->
+                        <th lay-data="{width:100,field: 'status',templet:function(d){return formatRefrence('allStatuss',d.status)}}">状态</th>
                         <th lay-data="{width:180,field: 'createTime',templet:function(d){return d.createTime==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}">创建时间</th>
-<!--                        <th lay-data="{width:100,field: 'status',templet:function(d){return formatRefrence('allStatuss',d.status)}}">状态</th>-->
-                        <th lay-data="{width:100,field: 'deleted'}">状态</th>
+                        <!--                        <th lay-data="{width:100,field: 'status',templet:function(d){return formatRefrence('allStatuss',d.status)}}">状态</th>-->
                         <!--<th lay-data="{width:100,field: 'descn'}">描述</th>
                         <th lay-data="{width:100,field: 'gender'}">性别</th>
                         <th lay-data="{width:100,field: 'birthday'}">生日</th>-->
@@ -133,8 +121,8 @@
             table.on('tool(LAY-entity-manage)', function(obj){
                 var data = obj.data;
                 if(obj.event == 'del'){
-                    layer.confirm('确定删除用户吗?', function(index){
-                        $.post('/user/delete',{id:data.id},function(result){
+                    layer.confirm('确定删除角色吗?', function(index){
+                        $.post('/role/delete',{id:data.id},function(result){
                             if(result.code == 0){
                                 obj.del();
                                 layer.msg(result.message);
@@ -145,11 +133,7 @@
                         });
                     });
                 } else if(obj.event == 'edit'){
-                    $.neo.framework.edit({table:table,url:'/user/edit?id='+data.id,updateUrl:'/user/update'});
-                }else if(obj.event == 'resetPassword'){
-                    $.post('/user/resetPassword',{id:data.id},function(result){
-                        layer.alert(result.msg);
-                    });
+                    $.neo.framework.edit({table:table,url:'/role/edit?id='+data.id,updateUrl:'/role/update'});
                 }
             });
             //事件
@@ -162,34 +146,18 @@
                     }
                     layer.confirm('确定删除吗？', function(index) {
                         //执行 Ajax 后重载
-                        var userIds=null;
-                        $(checkData).each(function (i,item) {
-                            if(userIds ==null){
-                                userIds = item.id;
-                            }else{
-                                userIds+=","+item.id;
-                            }
-                            return userIds;
+                        /*
+                        admin.req({
+                          url: 'xxx'
+                          //,……
                         });
-                        alert("checkData"+userIds);
-                        $.post('/user/batchdel',{ids:userIds},function(result){
-                            if(result.code == 0){
-                                // obj.del();
-                                layer.msg(result.message);
-                                layer.close(index);
-                                table.reload('LAY-entity-manage', {
-                                    //表格重载
-                                });
-                            }else{
-                                layer.alert(result.message);
-                            }
-                        });
+                        */
                         table.reload('LAY-entity-manage');
                         layer.msg('已删除');
                     });
                 }
                 ,add: function(){
-                    $.neo.framework.create({table:table,url:'/user/create',saveUrl:'/user/save'});
+                    $.neo.framework.create({table:table,url:'/role/create',saveUrl:'/role/save'});
                 }
             }
 

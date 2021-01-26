@@ -12,6 +12,7 @@ public class Result implements Serializable {
     private String message;
     private Object data;
     private int count;
+    private Object args;
 
     public Result() {
         this.setCode(0);
@@ -73,5 +74,13 @@ public class Result implements Serializable {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public Object getArgs() {
+        return args;
+    }
+
+    public void setArgs(Object args) {
+        this.args = args;
     }
 }

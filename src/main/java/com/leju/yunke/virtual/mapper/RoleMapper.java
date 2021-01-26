@@ -21,5 +21,13 @@ public interface RoleMapper {
 
     Role getRolesByUserId(@Param("userId") Integer userId);
 
+    Role selectByPrimaryKey(Integer id);
+
     List<Role> getAll(Map map);
+
+    int deleteByPrimaryKey(@Param("id") Integer id);
+    int updateByPrimaryKeySelective(Role record);
+    List<Role> queryList(Map map);
+    int updateDeletedByPrimaryKey(@Param("id") Integer id);
+
 }

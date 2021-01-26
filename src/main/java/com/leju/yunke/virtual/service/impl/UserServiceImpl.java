@@ -7,10 +7,11 @@ import com.leju.yunke.virtual.mapper.UserMapper;
 import com.leju.yunke.virtual.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author jingpb
@@ -62,5 +63,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public int deletedByPrimaryKey(Integer userId) {
         return userMapper.deleteByPrimaryKey(userId);
+    }
+
+    @Override
+    @Transactional
+    public boolean userBatchdel(String ids){
+        String[] array = ids.split(",");
+        Arrays.stream(array).forEach(i -> {
+            Integer id = Integer.valueOf(i);
+            int num = userMapper.deleteByPrimaryKey(id);
+        });
+        return true;
     }
 }

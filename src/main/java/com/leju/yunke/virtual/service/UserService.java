@@ -19,4 +19,5 @@ public interface UserService {
     boolean saveUser(User user);
     int updateByPrimaryKey(User user);
     int deletedByPrimaryKey(Integer userId);
+    boolean userBatchdel(String ids);
 }

@@ -1,5 +1,9 @@
 package com.leju.yunke.virtual.cons;
 
+import com.google.common.collect.Maps;
+
+import java.util.Map;
+
 /**
  * @author jingpb
  * @version 1.0
@@ -15,5 +19,11 @@ public class Const {
     //db数据记录是否可用
     public static final Integer DB_STATUS_NO = 0;//不可用
     public static final Integer DB_STATUS_YES = 1;//可用
+
+    public static Map<Integer, String> allStatuss = Maps.newLinkedHashMap();
+    static {
+        allStatuss.put(0, "停用");
+        allStatuss.put(1, "正常");
+    }
 
 }
