@@ -3,6 +3,8 @@ package com.leju.yunke.virtual.comm;
 public enum ResultStatus {
     OPERATE_FAIL(1000,"操作太频繁！"),
     PARAMA_NULL(1001,"参数不能为空！"),
+    SAVE_FAIL(500,"保存失败"),
+    DELETE_FAIL(501,"删除失败"),
     ;
     private Integer status;
     private String msg;

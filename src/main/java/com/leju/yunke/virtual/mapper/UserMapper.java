@@ -25,4 +25,7 @@ public interface UserMapper {
     List<User> pageData(Map map);
     int pageCount(Map map);
     List<User> queryUserList(Map map);
+
+    int updateByPrimaryKeySelective(User record);
+    int deleteByPrimaryKey(@Param("id")Integer id);
 }

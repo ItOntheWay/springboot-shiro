@@ -54,11 +54,11 @@
                     dataType: 'json',
                     success: function (result) {
                       parent.layer.close(editing_index);
-                      if (result.success) {
+                      if (result.code == 0) {
                         table.reload('LAY-entity-manage'); //数据刷新
                         parent.layer.close(index); //关闭弹层
                       } else {
-                        parent.layer.alert('保存异常:' + result.msg);
+                        parent.layer.alert('保存异常:' + result.message);
                       }
                     }
                   });
@@ -101,11 +101,11 @@
                     dataType: 'json',
                     success: function (result) {
                       parent.layer.close(editing_index);
-                      if (result.success) {
+                      if (result.code ==0) {
                         table.reload('LAY-entity-manage'); //数据刷新
                         parent.layer.close(index); //关闭弹层
                       } else {
-                        parent.layer.alert('保存异常:' + result.msg);
+                        parent.layer.alert('保存异常:' + result.message);
                       }
                     }
                   });

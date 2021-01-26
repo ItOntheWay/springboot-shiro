@@ -17,4 +17,5 @@ public class Role {
     private Integer status;
     private Date createTime;
     private Date updateTime;
+    private Integer deleted;
 }

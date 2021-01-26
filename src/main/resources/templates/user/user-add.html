@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" th:href="@{/static/layuiadmin/layui/css/layui.css}" href="../../static/layuiadmin/layui/css/layui.css"
+          media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="layuiadmin-form-entityadmin" id="layuiadmin-form-entityadmin" style="padding: 20px 0 0 0;">
+    <!--<div class="layui-form-item">
+        <label class="layui-form-label">学校</label>
+        <div class="layui-input-inline">
+            <select name="schoolid">
+                <option th:each="e:${schools}" th:value="${e.id}" th:text="${e.name}"></option>
+            </select>
+        </div>
+    </div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-inline">
+            <input name="username" autocomplete="off" class="layui-input" type="text"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-inline">
+            <input name="password" autocomplete="off" class="layui-input" type="text"/>
+        </div>
+    </div>
+    <!--<div class="layui-form-item">
+        <label class="layui-form-label">登录密码</label>
+        <div class="layui-input-inline">
+            <input name="password" autocomplete="off" class="layui-input" type="text"/>
+        </div>
+    </div>-->
+    <!--<div class="layui-form-item">
+        <label class="layui-form-label">用户角色</label>
+        <div class="layui-input-block">
+            <input type="checkbox" lay-skin="primary" th:each="e:${roles}"  th:name="|roleid${e.id}|" th:title="${e.name}" th:value="${e.id}">
+        </div>
+    </div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户角色</label>
+        <div class="layui-input-inline">
+            <select name="roleId">
+                <option th:each="e:${roles}" th:value="${e.id}" th:text="${e.name}"></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子邮件</label>
+        <div class="layui-input-inline">
+            <input name="email" autocomplete="off" class="layui-input" type="text"/>
+        </div>
+    </div>
+   <!-- <div class="layui-form-item">
+        <label class="layui-form-label">手机号码</label>
+        <div class="layui-input-inline">
+            <input name="mobileNo" autocomplete="off" class="layui-input" type="text"/>
+        </div>
+    </div>-->
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="LAY-entity-front-submit" id="LAY-entity-front-submit" value="确认">
+    </div>
+</div>
+
+<script th:src="@{/static/layuiadmin/layui/layui.js}" src="../../static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.use(['laydate', 'form'], function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#createTime'
+            , trigger: 'click'
+            , type: 'datetime'
+            , format: 'yyyy-MM-dd HH:mm:ss'
+            , type: 'datetime'
+        });
+        laydate.render({
+            elem: '#lastModifyTime'
+            , trigger: 'click'
+            , type: 'datetime'
+            , format: 'yyyy-MM-dd HH:mm:ss'
+            , type: 'datetime'
+        });
+    });
+</script>
+</body>
+</html>

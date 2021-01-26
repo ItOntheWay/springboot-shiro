@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.leju.yunke.virtual.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.leju.yunke.virtual.entity.User">
-    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="id" jdbcType="INTEGER" property="id" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
@@ -10,6 +10,15 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="INTEGER" property="deleted" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <association  property="role" column="role" javaType="com.leju.yunke.virtual.entity.Role">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="code" jdbcType="VARCHAR" property="code" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    </association >
   </resultMap>
   <sql id="Base_Where">
     <if test="id != null"> and id=#{id} </if>
@@ -156,8 +165,9 @@
   </select>
 
   <select id="queryUserList" resultMap="BaseResultMap" parameterType="map" >
-    select <include refid="Base_Column_List" /> from user where 1=1
+    select u.*,r.* from user u left join role r on u.role_id = r.id where 1=1
     <include refid="Base_Where" />
+
  </select>
 
 </mapper>

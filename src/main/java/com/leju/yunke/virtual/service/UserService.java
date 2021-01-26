@@ -14,5 +14,9 @@ import java.util.Map;
 public interface UserService {
     User getByUserName(String userName);
     User getByPrimaryKey(Integer userId);
+
     PageInfo<User> queryUserList(Map map);
+    boolean saveUser(User user);
+    int updateByPrimaryKey(User user);
+    int deletedByPrimaryKey(Integer userId);
 }

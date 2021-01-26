@@ -5,6 +5,9 @@ import com.leju.yunke.virtual.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author jingpb
  * @version 1.0
@@ -17,4 +20,6 @@ public interface RoleMapper {
     int insertSelective(Role record);
 
     Role getRolesByUserId(@Param("userId") Integer userId);
+
+    List<Role> getAll(Map map);
 }

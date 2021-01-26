@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class User {
-    private String id;
+    private Integer id;
     private String userName;
     private String password;
     private Integer roleId;
@@ -16,7 +16,8 @@ public class User {
     private Date updateTime;
 
     private Integer deleted;
-
     private String email;
+
+    private Role role;
 
 }

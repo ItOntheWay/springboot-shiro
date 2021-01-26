@@ -45,8 +45,9 @@ public class RenderController {
     }
 
     @GetMapping(value = {"", "/console"})
-    public String console() {
-
+    public String console(Model model) {
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute(Const.USER_SESSION_KEY);
+        model.addAttribute("user",user);
         return "console";
     }
 }
