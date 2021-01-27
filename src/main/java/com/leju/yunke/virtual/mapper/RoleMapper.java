@@ -30,4 +30,7 @@ public interface RoleMapper {
     List<Role> queryList(Map map);
     int updateDeletedByPrimaryKey(@Param("id") Integer id);
 
+    List<Map<String,Object>> selectByRoleid(Integer roleid);
+    List<Map<String,Object>> select2ByRoleid(Integer roleid);
+
 }

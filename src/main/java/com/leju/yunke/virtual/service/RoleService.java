@@ -1,6 +1,7 @@
 package com.leju.yunke.virtual.service;
 
 import com.github.pagehelper.PageInfo;
+import com.leju.yunke.virtual.entity.ResourceNode;
 import com.leju.yunke.virtual.entity.Role;
 
 import java.util.List;
@@ -40,5 +41,16 @@ public interface RoleService {
      * 逻辑删除
      * */
     boolean updateDeletedByPrimaryKey(Integer id);
+
+    /**
+     * 角色管理资源树
+     * */
+    List<ResourceNode> getAllResourceNode(Integer roleId);
+
+    /**
+     * 角色管理 角色资源关联关系
+     * */
+
+    boolean roleUpdate(Role role,String resourceIds);
 
 }

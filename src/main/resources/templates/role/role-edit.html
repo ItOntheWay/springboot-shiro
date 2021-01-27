@@ -8,6 +8,11 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" th:href="@{/static/layuiadmin/layui/css/layui.css}" href="../../static/layuiadmin/layui/css/layui.css"
           media="all">
+    <script src="../../static/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../../static/js/jquery-ztree/js/jquery.ztree.core-3.5.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/js/jquery-ztree/css/zTreeStyle/zTreeStyle.css" />
+    <script type="text/javascript" src="../../static/js/jquery-ztree/js/jquery.ztree.excheck-3.5.js"></script>
+    <script type="text/javascript" src="../../static/js/jquery-ztree/js/jquery.ztree.exedit-3.5.js"></script>
 </head>
 <body>
 
@@ -50,7 +55,15 @@
             </select>
         </div>
     </div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">资源</label>
+        <div class="layui-input-inline">
+            <input id="manage_role_editform_resourceIds" name="resourceIds" type="hidden"/>
+            <div id="manage_role_resource_tree" class="ztree"></div>
+        </div>
+    </div>
     <div class="layui-form-item layui-hide">
+        <input id="ztree-resource-btn" type="button"  value="组装资源" onclick="manage_role_editform_beforeSubmit()">
         <input type="button" lay-submit lay-filter="LAY-entity-front-submit" id="LAY-entity-front-submit" value="确认">
     </div>
 </div>
@@ -74,6 +87,49 @@
             , type: 'datetime'
         });
     });
+
+    $(function() {
+        manage_role_load_tree();
+    });
+
+    var manage_role_resource_tree_setting = {
+        check:{
+            enable: true,
+            chkboxType:{ "Y" : "ps", "N" : "ps" }
+        },
+        callback:{
+            onClick:function(event,treeId,treeNode,clickFlag){
+
+            }
+        }
+    };
+
+    function manage_role_load_tree(){
+        var roleId = [[${role!=null?role.id:0}]];
+        $.ajax({
+            url:"/role/getAllResourceNode",
+            data:{roleId:roleId},
+            success:function(data,txtStatus){
+                $.fn.zTree.init($("#manage_role_resource_tree"), manage_role_resource_tree_setting, data.data);
+                var zTree = $.fn.zTree.getZTreeObj("manage_role_resource_tree");
+                zTree.expandAll(true);
+            }
+        });
+    }
+
+    /**
+     * 提交前，获取所有选中的资源组装后请求服务器
+     */
+    function manage_role_editform_beforeSubmit(){
+        var zTree = $.fn.zTree.getZTreeObj("manage_role_resource_tree");
+        var nodes = zTree.getCheckedNodes(true);
+        var resourceIds = [];
+        $.each(nodes,function(index,e){
+            resourceIds.push(e.id);
+        });
+        $('#manage_role_editform_resourceIds').val(resourceIds.join(','));
+    }
+
 </script>
 </body>
 </html>

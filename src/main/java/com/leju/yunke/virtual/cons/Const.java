@@ -26,4 +26,10 @@ public class Const {
         allStatuss.put(1, "正常");
     }
 
+    public static Map<String, String> allResourcesType = Maps.newLinkedHashMap();
+    static {
+        allResourcesType.put("menu", "菜单");
+        allResourcesType.put("button", "按钮");
+    }
+
 }

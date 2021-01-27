@@ -20,4 +20,11 @@ public interface ResourcesMapper {
     List<Resources> getMenusByCondition(Map map);
 
     List<Resources> getSubMenusByParentId(@Param("resourcesId") Integer resourcesId);
+
+    List<Resources> getAll(Map map);
+    int  insertSelective(Resources resources);
+    int updateDeletedByPrimaryKey(Integer id);
+    Resources selectByPrimaryKey(Integer id);
+    int updateByPrimaryKeySelective(Resources resources);
+    boolean resourcesBatchdel(String ids);
 }

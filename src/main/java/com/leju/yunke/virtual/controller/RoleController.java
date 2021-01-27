@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.leju.yunke.virtual.comm.ResultStatus;
 import com.leju.yunke.virtual.cons.Const;
+import com.leju.yunke.virtual.entity.ResourceNode;
 import com.leju.yunke.virtual.entity.Role;
 import com.leju.yunke.virtual.res.Result;
 import com.leju.yunke.virtual.service.RoleService;
@@ -57,11 +58,11 @@ public class RoleController {
         if(!Objects.isNull(status)){
             map.put("status",status);
         }
-        if(Objects.isNull(page)){
+        if(StringUtils.isEmpty(page+"") || page<=0){
             page =1;
         }
         map.put("pageNum",page);
-        if(Objects.isNull(limit)){
+        if(StringUtils.isEmpty(limit+"") || limit<=0){
             limit =10;
         }
         map.put("pageSize",limit);
@@ -121,20 +122,35 @@ public class RoleController {
         return "role/role-edit";
     }
 
+    /**
+     * 修改角色资源
+     * */
     @RequestMapping("/role/update")
     @ResponseBody
-    public Result roleUpdate(Integer id,String name,Integer status,String code) {
+    public Result roleUpdate(Integer id,String name,Integer status,String code,String resourceIds) {
         Result result = Result.ok();
         Role role = new Role();
         role.setId(id);
         role.setCode(code);
         role.setName(name);
         role.setStatus(status);
-        boolean res = roleService.updateByPrimaryKey(role);
+        boolean res = roleService.roleUpdate(role,resourceIds);
         if(res){
             return result;
         }else{
             return new Result(ResultStatus.SAVE_FAIL);
         }
+    }
+
+    /**
+     * 角色管理权限树
+     * */
+    @RequestMapping("/role/getAllResourceNode")
+    @ResponseBody
+    public Result getAllResourceNode(Integer roleId) {
+        Result result = Result.ok();
+        List<ResourceNode> list = roleService.getAllResourceNode(roleId);
+        result.setData(list);
+        return result;
     }
 }

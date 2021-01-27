@@ -24,6 +24,7 @@ public class Resources {
     private String icon;
     private Date createTime;
     private Date updateTime;
+    private Integer deleted;
 
     private List<Resources> nodes;
 }

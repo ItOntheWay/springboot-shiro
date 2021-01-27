@@ -58,11 +58,11 @@ public class UserController {
         if(!StringUtils.isEmpty(city)){
             map.put("city",city);
         }
-        if(Objects.isNull(page)){
+        if(StringUtils.isEmpty(page+"") || page<=0){
             page =1;
         }
         map.put("pageNum",page);
-        if(Objects.isNull(limit)){
+        if(StringUtils.isEmpty(limit+"") || limit<=0){
             limit =10;
         }
         map.put("pageSize",limit);

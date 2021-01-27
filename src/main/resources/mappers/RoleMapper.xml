@@ -152,4 +152,18 @@
     set deleted = 1
     where id = #{id}
   </update>
+
+  <select id="selectByRoleid" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+    select t2.role_id,t1.* from resources t1
+    left join role_resources t2 on t1.id = t2.resources_id
+    and t2.role_id = #{roleid}
+    where t1.deleted = 0
+    ORDER BY t1.create_time desc
+  </select>
+  <select id="select2ByRoleid" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+		select b.* from (select * from role_resources where role_id=#{roleid}) a
+		LEFT JOIN resources b on a.resources_id=b.id
+		where b.deleted = 0
+		order by b.create_time desc
+  </select>
 </mapper>
