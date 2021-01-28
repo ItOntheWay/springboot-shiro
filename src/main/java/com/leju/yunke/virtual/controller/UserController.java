@@ -11,6 +11,8 @@ import com.leju.yunke.virtual.res.Result;
 import com.leju.yunke.virtual.service.RoleService;
 import com.leju.yunke.virtual.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +38,15 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
+
     @GetMapping(value = {"", "/users"})
     public String users(Model model) {
         List<Role> roleList = roleService.getAllUsedRoles();
         model.addAttribute("roles",roleList);
         return "user/user-list";
     }
+
+    @RequiresPermissions("users")
     @RequestMapping("/user/list")
     @ResponseBody
     public Result userList(String username, String city, Integer role , Integer page, Integer limit){
@@ -72,6 +77,7 @@ public class UserController {
         return result;
     }
 
+
     @RequestMapping("/user/create")
     public String userCreate(Model model) {
         List<Role> roleList = roleService.getAllUsedRoles();
@@ -79,6 +85,7 @@ public class UserController {
         return "user/user-add";
     }
 
+    @RequiresPermissions("user:add")
     @RequestMapping("/user/save")
     @ResponseBody
     public Result userSave(String username,String password,String email,Integer roleId) {
@@ -96,6 +103,7 @@ public class UserController {
         }
     }
 
+    @RequiresPermissions("user:delete")
     @RequestMapping("/user/delete")
     @ResponseBody
     public Result userDelete(Integer id) {
@@ -117,6 +125,7 @@ public class UserController {
         return "user/user-edit";
     }
 
+    @RequiresPermissions("user:edit")
     @RequestMapping("/user/update")
     @ResponseBody
     public Result userUpdate(Integer id,String username,String password,String email,Integer roleId) {
@@ -135,6 +144,7 @@ public class UserController {
         }
     }
 
+    @RequiresPermissions("user:batchDelete")
     @RequestMapping("/user/batchdel")
     @ResponseBody
     public Result userBatchdel(String ids) {

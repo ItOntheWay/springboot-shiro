@@ -20,15 +20,30 @@ layui.define(function(exports){
   
   //退出
   admin.events.logout = function(){
-    $.post('/manage/logout',{},function(result){
-      if(result.success){
-        window.location.href='/home/login';
+    $.post('/logout',{},function(result){
+      if(result.code==0){
+        window.location.href='/login';
       }else{
         layer.alert("退出异常");
       }
     });
   };
+  /*admin.events.logout = function(){
+    $.ajax({
+      url:'/logout',
+      // data:obj.field,
+      type:'post',
+      dataType:'json',
+      success: function(result){
+        if(result.code == 0){
+          window.location.href='/login';
+        }else{
 
+          layer.alert('退出异常');
+        }
+      }
+    });
+  };*/
   
   //对外暴露的接口
   exports('common', {});

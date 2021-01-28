@@ -8,8 +8,12 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * @author jingpb
@@ -50,5 +54,19 @@ public class LoginController {
             token.clear();
             return Result.error(e);
         }
+    }
+
+    @RequestMapping(value = "logout")
+    @ResponseBody
+    public Result logout() {
+        // 此处有坑： 退出登录，其实不用实现任何东西，只需要保留这个接口即可，也不可能通过下方的代码进行退出
+        // SecurityUtils.getSubject().logout();
+        // 因为退出操作是由Shiro控制的
+//        redirectAttributes.addFlashAttribute("message", "您已安全退出");
+//        return  new ModelAndView("redirect:index");
+        Result result = Result.ok();
+        SecurityUtils.getSubject().logout();
+        result.setMessage("注销成功");
+        return result;
     }
 }

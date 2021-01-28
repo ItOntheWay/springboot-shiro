@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
     <title>后台管理系统</title>
@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" th:href="@{/static/layuiadmin/layui/css/layui.css}" href="../static/layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" th:href="@{/static/layuiadmin/style/admin.css}" href="../static/layuiadmin/style/admin.css" media="all">
-    <script src="/static/js/jquery-1.11.2.min.js"></script>
+    <script src="../static/js/jquery-1.11.2.min.js"></script>
     <style>
         .layui-nav-child{margin-left: 20px;}
     </style>
@@ -89,7 +89,7 @@
         <div class="layui-side layui-side-menu">
             <div class="layui-side-scroll">
                 <div class="layui-logo" lay-href="/console">
-                    <span>NEO管理系统</span>
+                    <span>管理系统</span>
                 </div>
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
                     <li data-name="set" class="layui-nav-item"  th:each="m:${menus}">

@@ -95,6 +95,7 @@ public class ShiroRealm extends AuthorizingRealm {
             }
             info.setStringPermissions(permissionSet);
         }
+        logger.info("用户授权-->{}", JSON.toJSONString(info));
         return info;
     }
 }

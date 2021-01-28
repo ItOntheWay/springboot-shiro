@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-  
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
   <head>
     <meta charset="UTF-8">
     <title>欢迎页面-X-admin2.0</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
     <script src="../../static/js/jquery-1.11.2.min.js"></script>
     <script src="../../static/js/neo-framework.js"></script>
     <link rel="stylesheet" href="../../static/layuiadmin/layui/css/layui.css" media="all">
@@ -18,6 +20,7 @@
   </head>
   
   <body class="layui-anim layui-anim-up">
+
     <div class="layui-fluid">
         <div class="layui-card">
             <div class="layui-form layui-card-header layuiadmin-card-header-auto">
@@ -66,7 +69,9 @@
             <div class="layui-card-body">
                 <div style="padding-bottom: 10px;">
                     <button class="layui-btn layuiadmin-btn-useradmin" data-type="add">添加</button>
-                    <button class="layui-btn layuiadmin-btn-useradmin" data-type="batchdel">删除</button>
+                    <shiro:hasPermission name="user:batchDelete">
+                        <button class="layui-btn layuiadmin-btn-useradmin" data-type="batchdel">删除</button>
+                    </shiro:hasPermission>
                 </div>
                 <table lay-filter="LAY-entity-manage" class="layui-table" lay-data="{height:'full-220', url:'/user/list', page:true, id:'LAY-entity-manage' ,parseData: function(res){tableJson=res;return res;}}" >
                     <thead>
